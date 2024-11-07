@@ -40,8 +40,8 @@ void setup() {
 
       if (value1 == 1 && value2 == 1 && value3 == 0 && value4 == 1 && value5 == 1) {
         delay(2000); // Espera 2 segundos
-        motor1.setSpeed(75); // Configurar velocidad inicial del motor1
-        motor2.setSpeed(75); // Configurar velocidad inicial del motor2
+        motor1.setSpeed(50); // Configurar velocidad inicial del motor1
+        motor2.setSpeed(50); // Configurar velocidad inicial del motor2
         motor1.run(FORWARD);
         motor2.run(FORWARD);
         break; // Sale del bucle al iniciar el movimiento
@@ -60,18 +60,20 @@ void loop() {
   int value5 = digitalRead(ledPin5); //der
 
     // Baja la velocidad de motor1 si el sensor derecho se apaga
-  if (value4 == 0 || value5 == 0) {
-    motor1.setSpeed(10); // Disminuye la velocidad de motor1 si el sensor derecho está apagado
-    motor2.setSpeed(85);
-  } else if(value1 == 0 || value2 == 0){
-    motor1.setSpeed(85);
+  if (value4 == 0 && value5 == 0) { //Los dos sensores de la derecha detectan pista
+    motor1.setSpeed(0); 
+    motor2.setSpeed(50);
+  } else if(value4 == 1 && value5 == 0){ //El primer sensor derecho detecta pista
+    motor1.setSpeed(10);
+    motor2.setSpeed(50);
+  } else if(value1 == 0 && value2 == 0){//Los dos sensores de la izquierda no detectan pista
+    motor1.setSpeed(50);
+    motor2.setSpeed(0);
+  } else if(value1 == 0 && value2 == 1){
+    motor1.setSpeed(50);
     motor2.setSpeed(10);
   } else {
-    motor1.setSpeed(40);
-    motor2.setSpeed(40);
-    delay(25);
-    motor1.setSpeed(75);
-    motor2.setSpeed(75);
+    motor1.setSpeed(50);
+    motor2.setSpeed(50);
   }
-  
 }
